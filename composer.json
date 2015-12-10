@@ -1,0 +1,21 @@
+{
+    "name": "nvlad/yii2-storage",
+    "description": "Yii2 Storage",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","storage"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vlad Nikishin",
+            "email": "wildvampir@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+    },
+    "autoload": {
+        "psr-4": {
+            "nvlad\\storage\\": "src/"
+        }
+    }
+}
