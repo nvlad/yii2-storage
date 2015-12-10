@@ -4,36 +4,42 @@ namespace nvlad\storage;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\Url;
+use nvlad\storage\storages\StorageAbstract;
+use nvlad\storage\objects\ObjectAbstract;
 
 class Storage extends \yii\base\Component
 {
-    public $storage;
+    /** @var StorageAbstract */
+    private $storage;
+
+    public function setStorage($value)
+    {
+        if(!is_object($value)) {
+            $storage = $value;
+            $this->storage = Yii::createObject($storage);
+            if(!($this->storage instanceof StorageAbstract)) {
+                throw new InvalidParamException('Invalid Storage');
+            }
+        }
+    }
 
     public function getStorage()
     {
         if(!$this->storage) {
             $this->storage = ['class' => 'nvlad\storage\storages\Local'];
         }
-        if(!is_object($this->storage)) {
-            $backend = $this->storage;
-            $backend['storage'] = $this;
-            $this->storage = Yii::createObject($backend);
-            if(!($this->storage instanceof \nvlad\storage\storages\StorageAbstract)) {
-                throw new InvalidParamException('Invalid Storage');
-            }
-        }
+        $this->setStorage($this->storage);
+
         return $this->storage;
     }
-    public function get($file, $objectType = 'File')
+
+    public function save(ObjectAbstract $object)
     {
-        return Yii::createObject([
-            'class' => 'nvlad\storage\types\\'.ucfirst($objectType),
-            'storage' => $this,
-            'file' => $file,
-        ]);
+        return $this->storage->save($object);
     }
-    public function getUrl($path)
+
+    public function getUrl(ObjectAbstract $object, $params = null)
     {
-        return $this->getBackend()->getUrl($path);
+        return $this->storage->getUrl($object, $params);
     }
 }

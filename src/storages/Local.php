@@ -18,18 +18,23 @@ class Local extends StorageAbstract
         return $path;
     }
 
-    private function checkPath($path)
+    private function checkPath($file)
     {
-        return is_dir($path);
+        return is_dir(dirname($file));
     }
 
     public function save(ObjectAbstract $object)
     {
-        $path = $this->getPath($object->file);
+        $path = $this->filePath($object->file);
         if (!$this->checkPath($path)) {
-            FileHelper::createDirectory($path);
+            FileHelper::createDirectory(dirname($path));
         }
 
-        file_put_contents($file, $object->data);
+        $stream = $object->data;
+        $fh = fopen($path, 'a');
+        $result = stream_copy_to_stream($stream, $fh);
+        fclose($fh);
+
+        return $result;
     }
 }
