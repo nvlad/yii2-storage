@@ -30,11 +30,22 @@ class Local extends StorageAbstract
             FileHelper::createDirectory(dirname($path));
         }
 
-        $stream = $object->data;
+        $stream = $object->stream;
         $fh = fopen($path, 'a');
         $result = stream_copy_to_stream($stream, $fh);
         fclose($fh);
 
         return $result;
+    }
+
+    public function delete(ObjectAbstract $object)
+    {
+        $path = $this->filePath($object->file);
+
+        if (is_file($path)) {
+            return unlink($path);
+        }
+
+        return false;
     }
 }

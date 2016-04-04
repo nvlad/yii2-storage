@@ -38,8 +38,18 @@ class Storage extends \yii\base\Component
         return $this->storage->save($object);
     }
 
+    public function delete(ObjectAbstract $object)
+    {
+        return $this->storage->delete($object);
+    }
+
     public function getUrl(ObjectAbstract $object, $params = null)
     {
         return $this->storage->getUrl($object, $params);
+    }
+
+    public function getObject($url, $objectType = null)
+    {
+        return $this->storage->getObject($url, $objectType);
     }
 }
