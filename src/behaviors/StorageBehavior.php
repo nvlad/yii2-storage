@@ -65,19 +65,6 @@ class StorageBehavior extends Behavior
             } else {
                 $event->sender->setAttribute($i, $event->sender->getOldAttribute($i));
             }
-//            if (is_null($file)) {
-//                $file = \yii\web\UploadedFile::getInstance($event->sender, $i);
-//            }
-//            if ($file) {
-//                if (is_object($file)) {
-//                    $this->deleteFile($event, $i);
-//                    $this->saveFile($event, $file, $i);
-//                } else {
-//                    $event->sender->setAttribute($i, $file);
-//                }
-//            } elseif (!$this->deleteIfEmpty) {
-//                $event->sender->setAttribute($i, $event->sender->getOldAttribute($i));
-//            }
         }
     }
 
@@ -135,14 +122,6 @@ class StorageBehavior extends Behavior
         if ($filename) {
             $event->sender->setAttribute($attribute, $filename);
         }
-//
-//        if ($file instanceof \yii\web\UploadedFile) {
-//            $fileObject = new \nvlad\storage\objects\Image($file->tempName);
-//            $fileObject->file = '0000/'.uniqid().'.'.$file->getExtension();
-//            if ($this->_storage->save($fileObject)) {
-//                $event->sender->setAttribute($attribute, $this->_storage->getUrl($fileObject));
-//            }
-//        }
     }
 
     protected function deleteFile($event, $attribute)

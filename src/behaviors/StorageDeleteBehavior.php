@@ -63,19 +63,6 @@ class StorageBehavior extends Behavior
             } else {
                 $event->sender->setAttribute($i, $event->sender->getOldAttribute($i));
             }
-//            if (is_null($file)) {
-//                $file = \yii\web\UploadedFile::getInstance($event->sender, $i);
-//            }
-//            if ($file) {
-//                if (is_object($file)) {
-//                    $this->deleteFile($event, $i);
-//                    $this->saveFile($event, $file, $i);
-//                } else {
-//                    $event->sender->setAttribute($i, $file);
-//                }
-//            } elseif (!$this->deleteIfEmpty) {
-//                $event->sender->setAttribute($i, $event->sender->getOldAttribute($i));
-//            }
         }
     }
 
@@ -138,13 +125,7 @@ class StorageBehavior extends Behavior
     protected function deleteFile($event, $attribute)
     {
         $file = $event->sender->getOldAttribute($attribute);
-//        $name = basename($file);
         $obj = $this->_storage->storage->getObject($file, $this->objectType);
         $this->_storage->delete($obj);
-
-//        $path = $this->savePath();
-//        if (is_file($path.$name)) {
-//            unlink($path.$name);
-//        }
     }
 }
