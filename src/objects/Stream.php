@@ -1,6 +1,9 @@
 <?php
 namespace nvlad\storage\objects;
 
+/**
+ *@property $straem
+ */
 class Stream extends ObjectAbstract
 {
     private $stream;
@@ -10,7 +13,7 @@ class Stream extends ObjectAbstract
         $this->stream = $stream;
     }
 
-    public function getData()
+    public function getStream()
     {
         return $this->stream;
     }
