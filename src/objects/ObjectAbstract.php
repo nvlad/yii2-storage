@@ -12,6 +12,11 @@ abstract class ObjectAbstract extends \yii\base\Component
 
     abstract public function getStream();
 
+    public function getSize()
+    {
+        $this->storage->size($this);
+    }
+
     public function getUrl()
     {
         return $this->storage->getUrl($this);
